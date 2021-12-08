@@ -18,6 +18,7 @@ elitism = True
 # number of trucks
 numTrucks = 5
 
+# read differnt dataset
 # city_list =pd.read_csv("pr76.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("pr152.txt",sep=" ",header=0,names=['id','X','Y'])
 city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
