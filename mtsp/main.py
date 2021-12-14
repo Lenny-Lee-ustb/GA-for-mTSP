@@ -24,8 +24,10 @@ for i in pbar(range(numGenerations)):
     localRoute = pop.getFittest()
     if globalRoute.getDistance() > localRoute.getDistance():
         globalRoute = localRoute
+        # print("epochs:",i," distance:",localRoute.getDistance())
     yaxis.append(localRoute.getDistance())
     xaxis.append(i)
+
 toc = time.time()
 print("Time cost:",round(toc-tic,2))
 

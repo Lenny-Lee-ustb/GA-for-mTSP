@@ -12,7 +12,7 @@ seedValue = 1
 numGenerations = 200
 # size of population
 populationSize = 100
-mutationRate = 0.02
+mutationRate = 0.25
 tournamentSize = 10
 elitism = True
 # number of trucks
@@ -21,10 +21,10 @@ numTrucks = 5
 # read differnt dataset
 # city_list =pd.read_csv("pr76.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("pr152.txt",sep=" ",header=0,names=['id','X','Y'])
-city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
+# city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp51.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp100.txt",sep=" ",header=0,names=['id','X','Y'])
-# city_list =pd.read_csv("mtsp150.txt",sep=" ",header=0,names=['id','X','Y'])
+city_list =pd.read_csv("mtsp150.txt",sep=" ",header=0,names=['id','X','Y'])
 
 numNodes = len(city_list)
 X = city_list['X'].tolist()

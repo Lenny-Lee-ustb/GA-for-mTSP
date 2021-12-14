@@ -26,7 +26,6 @@ class GA:
             # Adds child to next generation
             newPopulation.saveRoute(i, child)
 
-
         # Performs Mutation
         for i in range(elitismOffset, newPopulation.populationSize):
             cls.mutate(newPopulation.getRoute(i))
@@ -104,7 +103,8 @@ class GA:
         swap1 = [] # values from 1
         swap2 = [] # values from 2
 
-        if random.randrange(1) < mutationRate:
+        if random.randrange(100)/100 < mutationRate:
+        # A change! reduce the random rate, former code has 100% mutate 
             # pop all the values to be replaced
             for i in range(route1startPos, route1lastPos + 1):
                 swap1.append(route.route[index1].pop(route1startPos))
