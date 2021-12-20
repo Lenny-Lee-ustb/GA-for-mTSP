@@ -1,4 +1,5 @@
 #蚁群算法解决TSP
+from globals import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
