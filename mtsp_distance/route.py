@@ -3,7 +3,6 @@ Represents the chromosomes in GA's population.
 The object is collection of individual routes taken by trucks.
 '''
 from routemanager import *
-
 class Route:
     # Good old constructor
     def __init__ (self, route = None):
@@ -29,19 +28,29 @@ class Route:
         else:
             self.route = route
 
-    def generateIndividual (self):
+    def generateIndividual (self, antpath):
         k=0
-        # put 1st member of RouteManager as it is (It represents the initial node) and shuffle the rest before adding
-        for dindex in range(1, RouteManager.numberOfDustbins()):
-            self.base[dindex-1] = RouteManager.getDustbin(dindex)
-        random.shuffle(self.base)
 
+        # ---Modify by ming---
+        # Original version use a random method to create init generate:
+        # ---
+        # # put 1st member of RouteManager as it is (It represents the initial node) and shuffle the rest before adding
+        # for dindex in range(1, RouteManager.numberOfDustbins()):
+        #     self.base[dindex-1] = RouteManager.getDustbin(dindex)
+        #     random.shuffle(self.base)
+        # ---
+        # Now we use ant colony algorithm to do this, every time we generate an individual,
+        # we random choose one from ant colony.
+        # The whole algorithm is in file ant.py
+
+        # print(antpath)
         for i in range(numTrucks):
             self.route[i].append(RouteManager.getDustbin(0)) # add same first node for each route
             for j in range(self.routeLengths[i]-1):
-                self.route[i].append(self.base[k]) # add shuffled values for rest
+                Dustbin = RouteManager.getDustbin(int(antpath[k]))
+                self.route[i].append(Dustbin) # add shuffled values for rest
                 k+=1
-
+        # print(self.route)
     # Returns j'th dustbin in i'th route
     def getDustbin(self, i, j):
         return self.route[i][j]
