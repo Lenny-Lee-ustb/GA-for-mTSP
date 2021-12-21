@@ -32,10 +32,8 @@ class Dustbin:
 		# yDis = abs(self.getY() - db.getY())
 		# dis = math.sqrt((xDis*xDis) + (yDis*yDis))
 	
-		# new method
-		index1 = self.getIndex()
-		index2 = db.getIndex()
-		dis = dist_map[index1][index2] 
+		# new method from Zhuolun 
+		dis = dist_map[self.getIndex()][db.getIndex()] 
 		return dis
 
 
