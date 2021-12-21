@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 import math
+import numpy as np
 '''
 Contains all global variables specific to simulation
 '''
@@ -12,7 +13,7 @@ seedValue = 1
 numGenerations = 200
 # size of population
 populationSize = 100
-mutationRate = 0.3
+mutationRate = 0.5
 tournamentSize = 10
 elitism = True
 # number of trucks
@@ -21,16 +22,22 @@ numTrucks = 5
 # read differnt dataset
 # city_list =pd.read_csv("pr76.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("pr152.txt",sep=" ",header=0,names=['id','X','Y'])
-# city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
+city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp51.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp100.txt",sep=" ",header=0,names=['id','X','Y'])
-city_list =pd.read_csv("mtsp150.txt",sep=" ",header=0,names=['id','X','Y'])
+# city_list =pd.read_csv("mtsp150.txt",sep=" ",header=0,names=['id','X','Y'])
 numNodes = len(city_list)
 X = city_list['X'].tolist()
 Y = city_list['Y'].tolist()
 
-dist_map = [[0]*numNodes]*numNodes
-
+# dist_map = [[0]*numNodes]*numNodes
+dist_map = np.zeros((numNodes,numNodes))
+for i in range(numNodes):
+    for j in range(numNodes):
+        if i != j:
+            dist_map[i][j] = math.sqrt((X[i] - X[j])**2 + (Y[i] - Y[j])**2)
+        else:
+            dist_map[i][j] = 100000
 
 def random_range(n, total):
     """Return a randomly chosen list of n positive integers summing to total.

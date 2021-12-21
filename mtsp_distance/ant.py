@@ -12,7 +12,7 @@ class AntColony:
         self.path_best = []
         self.distance_best = []
 
-    def iterate(self, max_iter=2):
+    def iterate(self, max_iter=20):
         MAX_iter = max_iter  # 最大迭代值
         AntCount = 100  # 蚂蚁数量
         # 信息素
@@ -29,13 +29,14 @@ class AntColony:
         city_count = len(citys)
 
         # 预计算距离
-        Distance = np.zeros((city_count, city_count))
-        for i in range(city_count):
-            for j in range(city_count):
-                if i != j:
-                    Distance[i][j] = math.sqrt((citys[i][0] - citys[j][0]) ** 2 + (citys[i][1] - citys[j][1]) ** 2)
-                else:
-                    Distance[i][j] = 100000
+        # Distance = np.zeros((city_count, city_count))
+        # for i in range(city_count):
+        #     for j in range(city_count):
+        #         if i != j:
+        #             Distance[i][j] = math.sqrt((citys[i][0] - citys[j][0]) ** 2 + (citys[i][1] - citys[j][1]) ** 2)
+        #         else:
+        #             Distance[i][j] = 100000
+        Distance = dist_map[1:,1:]
 
         # 初始信息素矩阵，全是为1组成的矩阵
         pheromonetable = np.ones((city_count, city_count))

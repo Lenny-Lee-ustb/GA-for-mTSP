@@ -8,7 +8,7 @@ pbar = progressbar.ProgressBar()
 tic = time.time()
 # Add Dustbins
 for i in range(numNodes):
-    RouteManager.addDustbin(Dustbin(X[i],Y[i]))
+    RouteManager.addDustbin(Dustbin(X[i],Y[i],i))
 
 random.seed(seedValue)
 yaxis = [] # Fittest value (distance)

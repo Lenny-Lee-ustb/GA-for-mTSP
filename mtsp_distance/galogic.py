@@ -40,9 +40,11 @@ class GA:
         child.base.append(Dustbin(-1, -1)) # since size is (numNodes - 1) by default
         startPos = 0
         endPos = 0
-        while (startPos >= endPos):
-            startPos = random.randint(1, numNodes-1)
-            endPos = random.randint(1, numNodes-1)
+        # while (startPos >= endPos):
+        #     startPos = random.randint(1, numNodes-1)
+        #     endPos = random.randint(1, numNodes-1)
+        startPos = random.randint(1, numNodes-2)
+        endPos = random.randint(startPos, numNodes-1)
 
         parent1.base = [parent1.route[0][0]]
         parent2.base = [parent2.route[0][0]]

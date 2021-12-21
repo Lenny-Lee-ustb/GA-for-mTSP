@@ -7,13 +7,14 @@ from globals import *
 
 class Dustbin:
 	# Good old constructor
-	def __init__ (self, x = None, y = None):
+	def __init__ (self, x = None, y = None, ci = None):
 		if x == None and y == None:
 			self.x = random.randint(0, xMax)
 			self.y = random.randint(0, yMax)
 		else:
 			self.x = x
 			self.y = y
+			self.index = ci
 
 	def getX (self):
 		return self.x
@@ -21,14 +22,20 @@ class Dustbin:
 	def getY (self):
 		return self.y
 
+	def getIndex(self):
+		return self.index
+
 	# Returns distance to the dustbin passed as argument
 	def distanceTo (self, db):
-		xDis = abs(self.getX() - db.getX())
-		yDis = abs(self.getY() - db.getY())
 		# old method
-		dis = math.sqrt((xDis*xDis) + (yDis*yDis))
+		# xDis = abs(self.getX() - db.getX())
+		# yDis = abs(self.getY() - db.getY())
+		# dis = math.sqrt((xDis*xDis) + (yDis*yDis))
+	
 		# new method
-		# if dist_map[][]
+		index1 = self.getIndex()
+		index2 = db.getIndex()
+		dis = dist_map[index1][index2] 
 		return dis
 
 
