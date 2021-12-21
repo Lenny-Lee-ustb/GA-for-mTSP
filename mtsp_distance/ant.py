@@ -23,7 +23,7 @@ class AntColony:
         Q = 1
         # 城市列表
         citys = []
-        #去掉第一个城市
+        # 去掉第一个城市
         for i in range(1, len(X)):
             citys.append([X[i], Y[i]])
         city_count = len(citys)
@@ -54,22 +54,21 @@ class AntColony:
         etable = 1.0 / Distance
         iter = 0  # 迭代初始值
 
-        while iter <  MAX_iter:
+        while iter < MAX_iter:
             # first：蚂蚁初始点选择
             # print(iter)
             if AntCount <= city_count:
-            #np.random.permutation随机排列一个数组的
                 candidate[:, 0] = np.random.permutation(range(city_count))[:AntCount]
             else:
-                m =AntCount -city_count
-                n =2
+                m = AntCount - city_count
+                n = 2
                 candidate[:city_count, 0] = np.random.permutation(range(city_count))[:]
-                while m >city_count:
-                    candidate[city_count*(n -1):city_count*n, 0] = np.random.permutation(range(city_count))[:]
-                    m = m -city_count
+                while m > city_count:
+                    candidate[city_count*(n - 1):city_count*n, 0] = np.random.permutation(range(city_count))[:]
+                    m = m - city_count
                     n = n + 1
-                candidate[city_count*(n-1):AntCount,0] = np.random.permutation(range(city_count))[:m]
-            length = np.zeros(AntCount)#每次迭代的N个蚂蚁的距离值
+                candidate[city_count*(n-1):AntCount, 0] = np.random.permutation(range(city_count))[:m]
+            length = np.zeros(AntCount)  # 每次迭代的N个蚂蚁的距离值
 
             # second：选择下一个城市选择
             for i in range(AntCount):
@@ -77,8 +76,8 @@ class AntColony:
                 unvisit = list(range(city_count))  # 列表形式存储没有访问的城市编号
                 visit = candidate[i, 0]  # 当前所在点,第i个蚂蚁在第一个城市
                 unvisit.remove(visit)  # 在未访问的城市中移除当前开始的点
-                for j in range(1, city_count):#访问剩下的city_count个城市，city_count次访问
-                    protrans = np.zeros(len(unvisit))#每次循环都更改当前没有访问的城市的转移概率矩阵1*30,1*29,1*28...
+                for j in range(1, city_count):  # 访问剩下的city_count个城市，city_count次访问
+                    protrans = np.zeros(len(unvisit))  # 每次循环都更改当前没有访问的城市的转移概率矩阵1*30,1*29,1*28...
                     # 下一城市的概率函数
                     for k in range(len(unvisit)):
                         # 计算当前城市到剩余城市的（信息素浓度^alpha）*（城市适应度的倒数）^beta
@@ -86,7 +85,6 @@ class AntColony:
                         protrans[k] = np.power(pheromonetable[visit][unvisit[k]], alpha) * np.power(
                             etable[visit][unvisit[k]], (alpha + 1))
 
-                    # 累计概率，轮盘赌选择
                     cumsumprobtrans = (protrans / sum(protrans)).cumsum()
                     cumsumprobtrans -= np.random.rand()
                     # 求出离随机数产生最近的索引值
@@ -96,11 +94,8 @@ class AntColony:
                     unvisit.remove(k)
                     length[i] += Distance[visit][k]
                     visit = k  # 更改出发点，继续选择下一个到达点
-                length[i] += Distance[visit][candidate[i, 0]]#最后一个城市和第一个城市的距离值也要加进去
+                length[i] += Distance[visit][candidate[i, 0]]  # 最后一个城市和第一个城市的距离值也要加进去
 
-            """
-            更新路径等参数
-            """
             # 如果迭代次数为一次，那么无条件让初始值代替path_best,distance_best.
             if iter == 0:
                 distance_best[iter] = length.min()
@@ -114,19 +109,14 @@ class AntColony:
                     distance_best[iter] = length.min()
                     path_best[iter] = candidate[length.argmin()].copy()
 
-            """
-                信息素的更新
-            """
-            #信息素的增加量矩阵
+            # 信息素的增加量矩阵
             changepheromonetable = np.zeros((city_count, city_count))
             for i in range(AntCount):
                 for j in range(city_count - 1):
-                    # 当前路径比如城市23之间的信息素的增量：1/当前蚂蚁行走的总距离的信息素
                     changepheromonetable[candidate[i, j]][candidate[i][j + 1]] += Q / length[i]
-                    #Distance[candidate[i, j]][candidate[i, j + 1]]
-                #最后一个城市和第一个城市的信息素增加量
+                # 最后一个城市和第一个城市的信息素增加量
                 changepheromonetable[candidate[i, j + 1]][candidate[i, 0]] += Q / length[i]
-            #信息素更新的公式：
+            # 信息素更新
             pheromonetable = (1 - rho) * pheromonetable + changepheromonetable
             iter += 1
         self.path_best = path_best
@@ -157,12 +147,12 @@ if __name__ == "__main__":
     path.append(path[0])
     for i in range(len(x)):
         plt.annotate(path[i], xy=(x[i], y[i]), xytext=(x[i] + 0.3, y[i] + 0.3))
-    plt.plot(x, y,'-o')
+    plt.plot(x, y, '-o')
 
     # 距离迭代图
     fig = plt.figure()
-    plt.title("Distance iteration graph")#距离迭代图
+    plt.title("Distance iteration graph")  # 距离迭代图
     plt.plot(range(1, len(distance_best) + 1), distance_best)
-    plt.xlabel("Number of iterations")#迭代次数
-    plt.ylabel("Distance value")#距离值
+    plt.xlabel("Number of iterations")  # 迭代次数
+    plt.ylabel("Distance value")  # 距离值
     plt.show()
