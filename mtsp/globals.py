@@ -9,7 +9,7 @@ xMax = 1000
 yMax = 1000
 seedValue = 1
 # numNodes = 51
-numGenerations = 200
+numGenerations = 5
 # size of population
 populationSize = 100
 mutationRate = 0.25
@@ -24,7 +24,15 @@ numTrucks = 5
 # city_list =pd.read_csv("pr226.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp51.txt",sep=" ",header=0,names=['id','X','Y'])
 # city_list =pd.read_csv("mtsp100.txt",sep=" ",header=0,names=['id','X','Y'])
-city_list =pd.read_csv("mtsp150.txt",sep=" ",header=0,names=['id','X','Y'])
+# city_list = pd.read_csv("mtsp150.txt", sep=" ",
+#                         header=0, names=['id', 'X', 'Y'])
+
+data_name = ["mtsp51", "mtsp100", "mtsp150", "pr76", "pr152", "pr226"]
+data = data_name[1]
+
+# beginning of the project
+city_list = pd.read_csv("../" + data + ".txt", sep=" ",
+                        header=0, names=['id', 'X', 'Y'])
 
 numNodes = len(city_list)
 X = city_list['X'].tolist()
@@ -40,14 +48,16 @@ def random_range(n, total):
 
 # Randomly distribute number of dustbins to subroutes
 # Maximum and minimum values are maintained to reach optimal result
+
+
 def route_lengths():
     upper = (numNodes + numTrucks - 1)
-    fa = upper/numTrucks*1.6 # max route length
-    fb = upper/numTrucks*0.6 # min route length
+    fa = upper/numTrucks*1.6  # max route length
+    fb = upper/numTrucks*0.6  # min route length
     a = random_range(numTrucks, upper)
     while 1:
-        if all( i < fa and i > fb  for i in a):
-                break
+        if all(i < fa and i > fb for i in a):
+            break
         else:
-                a = random_range(numTrucks, upper)
+            a = random_range(numTrucks, upper)
     return a
